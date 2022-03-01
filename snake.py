@@ -8,6 +8,8 @@ DIRECTIONS = {
     "DOWN": 270,
 }
 
+STARTING_POSITIONS = [(0,0), (-20, 0), (-40, 0)]
+
 
 class Snake:
 
@@ -17,14 +19,19 @@ class Snake:
         self.head = self.segments[0]
 
     def create_snake(self):
-        initial_x = 0
-        for _ in range(3):
-            new_segment = Turtle("square")
-            new_segment.penup()
-            new_segment.color("white")
-            new_segment.setx(initial_x)
-            self.segments.append(new_segment)
-            initial_x -= PACE
+        for position in STARTING_POSITIONS:
+            self.add_segment(position)
+
+    def add_segment(self, position):
+        new_segment = Turtle("square")
+        new_segment.penup()
+        new_segment.color("white")
+        new_segment.goto(position)
+        self.segments.append(new_segment)
+
+    def extend(self):
+        # adds a new segment
+        self.add_segment(self.segments[-1].position())
 
     def move(self):
         """
